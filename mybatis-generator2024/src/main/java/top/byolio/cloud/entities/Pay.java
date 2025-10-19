@@ -14,6 +14,7 @@ public class Pay {
     @GeneratedValue(generator = "JDBC")
     private Integer id;
 
+
     /**
      * 支付流水号
      */
