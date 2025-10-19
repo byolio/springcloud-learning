@@ -10,6 +10,7 @@ import javax.persistence.*;
 */
 @Table(name = "t_pay")
 public class Pay {
+
     @Id
     @GeneratedValue(generator = "JDBC")
     private Integer id;
