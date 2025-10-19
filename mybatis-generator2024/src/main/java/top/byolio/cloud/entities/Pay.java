@@ -44,6 +44,7 @@ public class Pay {
      */
     private Byte deleted;
 
+    
     /**
      * 创建时间
      */
