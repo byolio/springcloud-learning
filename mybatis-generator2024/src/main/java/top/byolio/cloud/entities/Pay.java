@@ -15,7 +15,6 @@ public class Pay {
     @GeneratedValue(generator = "JDBC")
     private Integer id;
 
-
     /**
      * 支付流水号
      */
@@ -27,6 +26,7 @@ public class Pay {
      */
     @Column(name = "order_no")
     private String orderNo;
+
 
     /**
      * 用户账号ID
