@@ -10,7 +10,6 @@ import javax.persistence.*;
 */
 @Table(name = "t_pay")
 public class Pay {
-
     @Id
     @GeneratedValue(generator = "JDBC")
     private Integer id;
@@ -26,7 +25,6 @@ public class Pay {
      */
     @Column(name = "order_no")
     private String orderNo;
-
 
     /**
      * 用户账号ID
@@ -44,7 +42,6 @@ public class Pay {
      */
     private Byte deleted;
 
-    
     /**
      * 创建时间
      */
@@ -187,7 +184,6 @@ public class Pay {
     public Date getUpdateTime() {
         return updateTime;
     }
-
 
     /**
      * 设置更新时间
