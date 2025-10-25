@@ -55,11 +55,11 @@
             <scope>test</scope>
         </dependency>
 <!--    本地自定义的cloud-api-commons包  -->
-<!--        <dependency>-->
-<!--            <groupId>top.byolio.cloud</groupId>-->
-<!--            <artifactId>cloud-api-commons</artifactId>-->
-<!--            <version>1.0-SNAPSHOT</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>top.byolio</groupId>
+            <artifactId>cloud-api-commons</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 
