@@ -34,6 +34,11 @@ public class OrderController {
         return restTemplate.getForObject(PaymentSrv_URL + "/get/" + id, ResultData.class, id);
     }
 
+    @GetMapping("get")
+    public ResultData getPayInfos(){
+        return restTemplate.getForObject(PaymentSrv_URL + "/get", ResultData.class);
+    }
+
     @DeleteMapping("del/{id}")
     public ResultData delOrder(@PathVariable("id") Integer id){
         // 使用 exchange 方法发送 DELETE 请求，并获取返回的 ResultData
