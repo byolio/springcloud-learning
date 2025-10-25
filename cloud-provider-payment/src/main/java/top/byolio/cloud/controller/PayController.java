@@ -75,6 +75,4 @@ public class PayController {
         }).collect(Collectors.toList());
         return ResultData.success(payDTOs);
     }
-
-
 }
