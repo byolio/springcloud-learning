@@ -1,0 +1,58 @@
+package top.byolio.cloud.controller;
+
+import jakarta.annotation.Resource;
+import org.springframework.http.HttpMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import top.byolio.cloud.entities.PayDTO;
+import top.byolio.cloud.resp.ResultData;
+
+/**
+ * ClassName: RestController
+ * Description:
+ *
+ * @Author Byolio
+ * @Create 2025/10/24 20:03
+ * @Version 1.0
+ */
+@RestController
+@RequestMapping("consumer/pay/")
+public class OrderController {
+
+    public static final String PaymentSrv_URL = "http://localhost:8001/pay";
+
+    @Resource
+    private RestTemplate restTemplate;
+
+    @PostMapping("add")
+    public ResultData addOrder(@RequestBody PayDTO payDTO){
+        return restTemplate.postForObject(PaymentSrv_URL + "/add", payDTO, ResultData.class);
+    }
+
+    @GetMapping("get/{id}")
+    public ResultData getPayInfo(@PathVariable("id") Integer id){
+        return restTemplate.getForObject(PaymentSrv_URL + "/get/" + id, ResultData.class, id);
+    }
+
+    @DeleteMapping("del/{id}")
+    public ResultData delOrder(@PathVariable("id") Integer id){
+        // 使用 exchange 方法发送 DELETE 请求，并获取返回的 ResultData
+        return restTemplate.exchange(
+                PaymentSrv_URL + "/del/" + id,
+                HttpMethod.DELETE, // 明确指定 HTTP DELETE 方法
+                null,              // RequestEntity，删除操作通常不需要请求体
+                ResultData.class   // 期望的返回类型
+        ).getBody();             // 获取响应体
+    }
+
+    @PutMapping("update")
+    public ResultData updateOrder(@RequestBody PayDTO payDTO){
+        // 使用 exchange 发送 PUT 请求，携带请求体，返回 ResultData
+        return restTemplate.exchange(
+                PaymentSrv_URL + "/update",   // 请求路径
+                HttpMethod.PUT,                // 指定 PUT 方法
+                new org.springframework.http.HttpEntity<>(payDTO), // 携带请求体
+                ResultData.class               // 返回类型
+        ).getBody();                            // 获取响应体
+    }
+}
