@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import top.byolio.cloud.entities.Pay;
 import top.byolio.cloud.entities.PayDTO;
@@ -74,5 +75,13 @@ public class PayController {
             return payDTO;
         }).collect(Collectors.toList());
         return ResultData.success(payDTOs);
+    }
+
+    @Value("${server.port}")
+    private String port;
+
+    @GetMapping(value = "get/info")
+    public String getInfoByConsul(@Value("${byolio.info}") String info){
+        return "info: " + info;
     }
 }

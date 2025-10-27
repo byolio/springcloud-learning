@@ -19,7 +19,9 @@ import top.byolio.cloud.resp.ResultData;
 @RequestMapping("consumer/pay/")
 public class OrderController {
 
-    public static final String PaymentSrv_URL = "http://localhost:8001/pay";
+//    public static final String PaymentSrv_URL = "http://localhost:8001/pay";
+    public static final String PaymentSrv_URL = "http://cloud-payment-service/pay";
+    // 使用consul上注册中心的name
 
     @Resource
     private RestTemplate restTemplate;
