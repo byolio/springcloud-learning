@@ -10,5 +10,5 @@ spring:
       config:
         profile-separator: '-'
         format: YAML
-        watch:
-          wait-time: 5
+#        watch:
+#          wait-time: 5

@@ -19,8 +19,8 @@ import tk.mybatis.spring.annotation.MapperScan;
 @MapperScan("top.byolio.cloud.mapper")   // 自动启动类
 @EnableDiscoveryClient
 @RefreshScope   // 动态及时刷新
-public class Main {
+public class Main8001 {
     public static void main(String[] args) {
-        SpringApplication.run(Main.class, args);
+        SpringApplication.run(Main8001.class, args);
     }
 }

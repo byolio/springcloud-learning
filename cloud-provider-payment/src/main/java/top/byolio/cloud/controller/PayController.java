@@ -84,4 +84,5 @@ public class PayController {
     public String getInfoByConsul(@Value("${byolio.info}") String info){
         return "info: " + info;
     }
+
 }
