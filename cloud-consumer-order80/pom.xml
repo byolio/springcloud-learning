@@ -18,7 +18,7 @@
     </properties>
 
     <dependencies>
-<!--        loadbalance -->
+<!--        loadBalance -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>

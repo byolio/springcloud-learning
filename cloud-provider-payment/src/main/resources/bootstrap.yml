@@ -12,3 +12,11 @@ spring:
         format: YAML
 #        watch:
 #          wait-time: 5
+
+management:
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0  # 默认为0.1采样率, 每10次记录一次

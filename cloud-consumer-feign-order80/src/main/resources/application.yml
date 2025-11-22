@@ -1,0 +1,128 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: cloud-consumer-openfeign-order
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        prefer-ip-address: true   # 优先使用服务ip进行注册
+        service-name: ${spring.application.name}
+    openfeign:
+      client:
+        config:
+          default:
+            # 连接超时时间
+            connect-timeout: 3000
+            # 读取超时时间
+            read-timeout: 3000
+          cloud-payment-service:
+            connect-timeout: 20000
+            read-timeout: 20000
+#            Apache HttpClient5 配置开始
+      httpclient:
+        hc5:
+          enabled: true
+      compression:
+        request:
+          enabled: true
+          min-request-size: 2048
+          mime-types: text/xml, application/xml, application/json
+        response:
+          enabled: true
+#          开启circuitbreaker和分组激活
+      circuitbreaker:
+        enabled: true
+        group:
+          enabled: false   # 设置成false, 新启线程和主线程分离
+
+# 日志监控等级设置
+#logging:
+#  level:
+#    top:
+#      byolio:
+#        cloud:
+#          apis:
+#            PayFeignApi: debug
+
+# 基于count_based
+#resilience4j:
+#  circuitbreaker:
+#    configs:
+#      default:
+#        failure-rate-threshold: 50
+#        sliding-window-type: count_based
+#        sliding-window-size: 6
+#        minimum-number-of-calls: 6
+#        automatic-transition-from-open-to-half-open-enabled: true
+#        wait-duration-in-open-state: 5s
+#        permitted-number-of-calls-in-half-open-state: 2
+#        record-exceptions:
+#          - java.lang.Exception
+#    instances:
+#      cloud-payment-service:
+#        base-config: default
+
+
+resilience4j:
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 10s
+  circuitbreaker:
+    configs:
+      default:
+        failure-rate-threshold: 50
+        slow-call-duration-threshold: 2s
+        slow-call-rate-threshold: 30
+        sliding-window-type: time_based
+        sliding-window-size: 2
+        minimum-number-of-calls: 2
+        permitted-number-of-calls-in-half-open-state: 2
+        wait-duration-in-open-state: 5s
+        record-exceptions:
+          - java.lang.Exception
+    instances:
+      cloud-payment-service:
+        base-config: default
+#        信号量舱壁设置
+#  bulkhead:
+#    configs:
+#      default:
+#        max-concurrent-calls: 2
+#        max-wait-duration: 1s  # 线程堵塞时, 只愿意花1秒, 过时进入舱壁fallback兜底
+#    instances:
+#      cloud-payment-service:
+#        base-config: default
+
+#  线程池舱壁设置
+  thread-pool-bulkhead:
+    configs:
+      default:
+        maxThreadPoolSize: 1
+        coreThreadPoolSize: 1
+        queue-capacity: 1
+    instances:
+      cloud-payment-service:
+        base-config: default
+
+  ratelimiter:
+    configs:
+      default:
+        limit-for-period: 2
+        limit-refresh-period: 1s
+        timeout-duration: 1
+    instances:
+      cloud-payment-service:
+        base-config: default
+
+management:
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0   # 采样率

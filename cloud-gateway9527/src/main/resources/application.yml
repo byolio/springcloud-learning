@@ -1,0 +1,70 @@
+server:
+  port: 9527
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        prefer-ip-address: true
+        service-name: ${spring.application.name}
+    gateway:
+      routes:
+        - id: pay_routh1
+#          uri: http://localhost:8001
+          uri: lb://cloud-payment-service
+          predicates:
+            - Path=/pay/gateway/get/**
+            - After=2025-11-11T16:15:35.263909200+08:00[Asia/Shanghai]
+#            - Cookie=username,byolio
+#            - Header=X-Request-Id, \d+
+#            - Host=**.byolio.top
+#            - Query=username, \d+
+#            - RemoteAddr=192.168.197.1/24
+#            - Method=POST
+#          自定义路由
+#            - My=diamond
+#            - name: My
+#              args:
+#                userType: diamond
+        - id: pay_routh2
+#          uri: http://localhost:8001
+          uri: lb://cloud-payment-service
+          predicates:
+            - Path=/pay/gateway/info/**
+
+        - id: pay_routh3
+          uri: lb://cloud-payment-service
+          predicates:
+            - Path=/pay/gateway/filter/**
+#          配合PrefixPath
+#            - Path=/gateway/filter/**
+          filters:
+#            路径重定向
+#            - RedirectTo=302, https://byolio.blog/
+#            路径映射
+#            - SetPath=/pay/gateway/{segment}
+#            路径前缀设置
+#            - PrefixPath=/pay
+#            添加请求头
+#            - AddRequestHeader=X-Request-byolio1,byolioValue1
+#            - AddRequestHeader=X-Request-byolio2,byolioValue2
+#           删除请求头
+#            - RemoveRequestHeader=postman-token
+#            修改请求头
+#            - SetRequestHeader=postman-token, abc123
+#            添加请求参数
+#            - AddRequestParameter=customerId,abc123
+#            删除请求参数
+#            - RemoveRequestParameter=customerName
+#            添加回应头
+#            - AddResponseHeader=X-Response-byolio,BlueResponse
+#            设置回应头
+#            - SetResponseHeader=Date,2099-11-11
+#            删除回应头
+#            - RemoveResponseHeader=Content-Type
+#            自定义过滤器
+            - My=byolio

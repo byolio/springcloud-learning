@@ -13,6 +13,7 @@ import top.byolio.cloud.resp.ResultData;
 import top.byolio.cloud.service.PayService;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -58,6 +59,12 @@ public class PayController {
     @Operation(summary = "按照ID查流水", description = "查询支付流水的方法")
     public ResultData<PayDTO> getById(@PathVariable("id") Integer id){
         if(id < 0) throw new RuntimeException("id不能为负数");
+        // 堵塞看效果
+        try {
+            TimeUnit.SECONDS.sleep(60);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Pay pay = payService.getById(id);
         PayDTO payDTO = new PayDTO();
         BeanUtils.copyProperties(pay,payDTO);
@@ -82,7 +89,7 @@ public class PayController {
 
     @GetMapping(value = "get/info")
     public String getInfoByConsul(@Value("${byolio.info}") String info){
-        return "info: " + info;
+        return "info: " + info + "port:" +  port;
     }
 
 }

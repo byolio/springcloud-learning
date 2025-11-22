@@ -1,4 +1,5 @@
 top\byolio\cloud\resp\ReturnCodeEnum.class
+top\byolio\cloud\apis\PayFeignApi.class
 top\byolio\cloud\exp\GlobalExceptionHandler.class
 top\byolio\cloud\resp\ResultData.class
 top\byolio\cloud\entities\PayDTO.class

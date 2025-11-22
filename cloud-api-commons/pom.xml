@@ -19,6 +19,11 @@
     </properties>
 
     <dependencies>
+        <!--        openFeign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
         <!--        springBoot通用模块 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
